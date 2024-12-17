@@ -1,5 +1,5 @@
 def main():
-    path_to_file = "./books/frankenstein.txt"
+    path_to_file = "books/frankenstein.txt"
 
     with open(path_to_file) as f:
         file_contents = f.read()
@@ -7,8 +7,11 @@ def main():
     word_count = count_words(file_contents)
 
     character_count = count_characters(file_contents)
-    print(f"Word count is: {word_count}")
-    print(character_count)
+    sorted_character_count = sort_dict(character_count)
+
+    print("---- Report for {path_to_file} ----")
+    print_report(word_count, sorted_character_count)
+    print("---- End of Report ----")
 
 #counts word in a file
 def count_words(file):
@@ -28,5 +31,14 @@ def count_characters(file):
         character_count[s] += 1
     
     return character_count
+
+#sorts a dictionary in descending order by their values
+def sort_dict(unsorted_dict):
+    return {k: v for k, v in sorted(unsorted_dict.items(), key=lambda item: item[1], reverse=True)}
+
+def print_report(word_count, character_count):
+    print(f"{word_count} words in the file\n")
+    for k in character_count:
+        print(f"The \'{k}\' character was found {character_count[k]} times")
 
 main()
